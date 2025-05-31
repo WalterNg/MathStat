@@ -12,6 +12,7 @@ if "statistics_data" not in st.session_state:
         {
             "Sample_ID": ["Sample_1", "Sample_2", "Sample_3"],
             "Value": [10.5, 15.2, 8.7],
+            "Weight": [1, 1, 1],  # Default equal weights of 1
         }
     )
 
@@ -26,6 +27,13 @@ edited_df = st.data_editor(
     use_container_width=True,
     key="main_data_editor",
 )
+
+# Ensure Weight column exists and has default values for new rows
+if "Weight" not in edited_df.columns:
+    edited_df["Weight"] = 1
+else:
+    # Fill any NaN weights with default value of 1
+    edited_df["Weight"] = edited_df["Weight"].fillna(1)
 
 n_rows = len(edited_df)
 
@@ -45,23 +53,37 @@ with tab1:
         start_idx = start_window - 1
         end_idx = end_window - 1
         
-        # Get the window values using the correct indices
+        # Get the window values and weights using the correct indices
         window_values = edited_df['Value'].iloc[start_idx:end_idx + 1]
-        next_value_prediction = window_values.mean()
+        window_weights = edited_df['Weight'].iloc[start_idx:end_idx + 1]
+        
+        # Calculate relative weights (proportions)
+        total_weight = window_weights.sum()
+        relative_weights = window_weights / total_weight
+        
+        # Calculate weighted average
+        next_value_prediction = sum(w * v for w, v in zip(relative_weights, window_values))
         
         # Display prediction in a mathematical format
         st.markdown("---")
-        st.markdown("### Moving Average Calculation")
+        st.markdown("### Weighted Moving Average Calculation")
         
-        # Show the formula and values
-        values_str = " + ".join([f"{x:.2f}" for x in window_values])
+        # Show the formula and values with both raw weights and their proportions
+        weight_info = []
+        for w, v in zip(window_weights, window_values):
+            prop = w / total_weight
+            weight_info.append(f"({w} × {v:.2f}) = {prop:.2%} influence")
+        
+        values_str = " + ".join([f"({w:.2f} × {v:.2f})" for w, v in zip(relative_weights, window_values)])
+        
         st.markdown(
             f"""
             <div style='background-color: #f8f9fa; padding: 20px; border-radius: 5px; border: 1px solid #dee2e6; font-family: "Courier New", monospace;'>
-                <p style='margin: 0; color: #495057;'>MA = (x₁ + x₂ + ... + xₙ) / n</p>
-                <p style='margin: 10px 0; color: #495057;'>where n = {len(window_values)}</p>
-                <p style='margin: 10px 0; color: #495057;'>MA = ({values_str}) / {len(window_values)}</p>
-                <p style='margin: 10px 0; color: #495057;'>MA = {next_value_prediction:.2f}</p>
+                <p style='margin: 0; color: #495057;'>WMA = Σ(wᵢ × xᵢ) / Σwᵢ</p>
+                <p style='margin: 10px 0; color: #495057;'>Raw Weights: {', '.join([str(w) for w in window_weights])}</p>
+                <p style='margin: 10px 0; color: #495057;'>Weight Proportions: {', '.join([f"{w/total_weight:.2%}" for w in window_weights])}</p>
+                <p style='margin: 10px 0; color: #495057;'>WMA = {values_str}</p>
+                <p style='margin: 10px 0; color: #495057;'>WMA = {next_value_prediction:.2f}</p>
             </div>  
             """,
             unsafe_allow_html=True
