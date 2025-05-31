@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime
 
 # Set page configuration
-st.set_page_config(page_title="Statistics Calculator", layout="wide")
+st.set_page_config(page_title="Statistics Calculator")
 
 # Initialize session state for data persistence
 if "statistics_data" not in st.session_state:
@@ -41,23 +41,28 @@ with tab1:
 
     # Calculate next value prediction
     if len(edited_df) >= end_window:
-        last_window = edited_df['Value'].iloc[-end_window:]
-        next_value_prediction = last_window.mean()
+        # Convert from 1-based sample numbers to 0-based indices
+        start_idx = start_window - 1
+        end_idx = end_window - 1
+        
+        # Get the window values using the correct indices
+        window_values = edited_df['Value'].iloc[start_idx:end_idx + 1]
+        next_value_prediction = window_values.mean()
         
         # Display prediction in a mathematical format
         st.markdown("---")
         st.markdown("### Moving Average Calculation")
         
         # Show the formula and values
-        values_str = ", ".join([f"{x:.2f}" for x in last_window])
+        values_str = ", ".join([f"{x:.2f}" for x in window_values])
         st.markdown(
             f"""
             <div style='background-color: #f8f9fa; padding: 20px; border-radius: 5px; border: 1px solid #dee2e6; font-family: "Courier New", monospace;'>
                 <p style='margin: 0; color: #495057;'>MA = (x₁ + x₂ + ... + xₙ) / n</p>
-                <p style='margin: 10px 0; color: #495057;'>where n = {end_window}</p>
-                <p style='margin: 10px 0; color: #495057;'>MA = ({values_str}) / {end_window}</p>
+                <p style='margin: 10px 0; color: #495057;'>where n = {len(window_values)}</p>
+                <p style='margin: 10px 0; color: #495057;'>MA = ({values_str}) / {len(window_values)}</p>
                 <p style='margin: 10px 0; color: #495057;'>MA = {next_value_prediction:.2f}</p>
-            </div>
+            </div>  
             """,
             unsafe_allow_html=True
         )
