@@ -54,7 +54,7 @@ with tab1:
         st.markdown("### Moving Average Calculation")
         
         # Show the formula and values
-        values_str = ", ".join([f"{x:.2f}" for x in window_values])
+        values_str = " + ".join([f"{x:.2f}" for x in window_values])
         st.markdown(
             f"""
             <div style='background-color: #f8f9fa; padding: 20px; border-radius: 5px; border: 1px solid #dee2e6; font-family: "Courier New", monospace;'>
