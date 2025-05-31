@@ -36,7 +36,7 @@ with tab1:
     start_window, end_window = st.select_slider(
         "Chọn độ dài cửa sổ trượt",
         options=list(range(1, n_rows + 1)),
-        value=(3, 5)
+        value=(1,3)
     )
 
     # Calculate next value prediction
