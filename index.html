@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Streamlit Tabs - Complete Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">Beautiful Streamlit Tabs</h1>
+            <p class="header__subtitle">Complete guide to creating visually appealing tab navigation</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav__list">
+                <button class="nav__item nav__item--active" data-section="basic">Basic Implementation</button>
+                <button class="nav__item" data-section="advanced">Advanced Styling</button>
+                <button class="nav__item" data-section="responsive">Responsive Design</button>
+                <button class="nav__item" data-section="alternatives">Alternative Solutions</button>
+                <button class="nav__item" data-section="best-practices">Best Practices</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <!-- Basic Implementation Section -->
+            <section id="basic" class="section section--active">
+                <div class="section__header">
+                    <h2>Basic Implementation</h2>
+                    <p>Standard Streamlit tabs with minimal styling</p>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Simple Tabs</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="basic-simple">Copy Code</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-python" id="basic-simple">tab1, tab2, tab3 = st.tabs(['Chart', 'Data', 'Analysis'])
+
+with tab1:
+    st.line_chart(data)
+
+with tab2:
+    st.dataframe(data)
+
+with tab3:
+    st.success('Analysis complete!')</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Tabs with Icons</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="basic-icons">Copy Code</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-python" id="basic-icons">tab1, tab2, tab3 = st.tabs(['📈 Chart', '🗃 Data', '📊 Analysis'])
+
+with tab1:
+    st.plotly_chart(fig)
+
+with tab2:
+    st.dataframe(df)
+
+with tab3:
+    st.metric("Performance", "95%", "5%")</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Dynamic Tab Creation</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="basic-dynamic">Copy Code</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-python" id="basic-dynamic"># Dynamic tabs from data
+sections = ['Overview', 'Details', 'Reports']
+tabs = st.tabs(sections)
+
+for i, tab in enumerate(tabs):
+    with tab:
+        st.write(f"Content for {sections[i]}")
+        if i == 0:
+            st.bar_chart(data)
+        elif i == 1:
+            st.table(details_df)
+        else:
+            st.download_button("Download Report", data)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-area">
+                    <h3>Live Demo</h3>
+                    <div class="streamlit-tabs-demo">
+                        <div class="tabs-list">
+                            <button class="tab tab--active">📈 Chart</button>
+                            <button class="tab">🗃 Data</button>
+                            <button class="tab">📊 Analysis</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="chart-placeholder">Chart visualization would appear here</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Advanced Styling Section -->
+            <section id="advanced" class="section">
+                <div class="section__header">
+                    <h2>Advanced Styling</h2>
+                    <p>Custom CSS styling for professional-looking tabs</p>
+                </div>
+
+                <div class="style-customizer">
+                    <h3>Interactive Style Customizer</h3>
+                    <div class="customizer-controls">
+                        <div class="control-group">
+                            <label class="form-label">Style Preset</label>
+                            <select class="form-control preset-selector">
+                                <option value="default">Default</option>
+                                <option value="modern">Modern</option>
+                                <option value="material">Material Design</option>
+                                <option value="classic">Classic</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label class="form-label">Tab Height</label>
+                            <input type="range" class="range-control" min="40" max="80" value="60" data-property="height">
+                            <span class="range-value">60px</span>
+                        </div>
+                        <div class="control-group">
+                            <label class="form-label">Border Radius</label>
+                            <input type="range" class="range-control" min="0" max="20" value="8" data-property="border-radius">
+                            <span class="range-value">8px</span>
+                        </div>
+                        <div class="control-group">
+                            <label class="form-label">Gap</label>
+                            <input type="range" class="range-control" min="0" max="20" value="8" data-property="gap">
+                            <span class="range-value">8px</span>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-area">
+                        <div class="streamlit-tabs-demo customizable-demo">
+                            <div class="tabs-list">
+                                <button class="tab tab--active">Home</button>
+                                <button class="tab">Projects</button>
+                                <button class="tab">Contact</button>
+                            </div>
+                            <div class="tab-content">
+                                <p>Preview your custom styling here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Professional Design CSS</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="advanced-professional">Copy CSS</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-css" id="advanced-professional">.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    background-color: #f0f2f6;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 60px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: #1f77b4;
+    color: white;
+    box-shadow: 0 4px 12px rgba(31, 119, 180, 0.3);
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    border-color: #1f77b4;
+    transform: translateY(-2px);
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Dark Theme CSS</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="advanced-dark">Copy CSS</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-css" id="advanced-dark">.stTabs [data-baseweb="tab-list"] {
+    background-color: #2e2e2e;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: #404040;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+}
+
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Responsive Design Section -->
+            <section id="responsive" class="section">
+                <div class="section__header">
+                    <h2>Responsive Design</h2>
+                    <p>Mobile-friendly tab layouts and responsive patterns</p>
+                </div>
+
+                <div class="responsive-demo">
+                    <div class="demo-controls">
+                        <button class="btn btn--outline view-toggle" data-view="desktop">Desktop View</button>
+                        <button class="btn btn--outline view-toggle view-toggle--active" data-view="mobile">Mobile View</button>
+                    </div>
+                    
+                    <div class="device-preview">
+                        <div class="device-frame device-frame--mobile">
+                            <div class="streamlit-tabs-demo responsive-tabs">
+                                <div class="tabs-list tabs-list--vertical">
+                                    <button class="tab tab--active">📱 Overview</button>
+                                    <button class="tab">⚙️ Settings</button>
+                                    <button class="tab">📊 Analytics</button>
+                                </div>
+                                <div class="tab-content">
+                                    <h4>Mobile-Optimized Content</h4>
+                                    <p>Content adapts to smaller screens</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Mobile-First CSS</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="responsive-mobile">Copy CSS</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-css" id="responsive-mobile">/* Mobile-first approach */
+.stTabs [data-baseweb="tab-list"] {
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 12px 16px;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+    .stTabs [data-baseweb="tab-list"] {
+        flex-direction: row;
+        gap: 8px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        width: auto;
+        font-size: 16px;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Horizontal Scroll for Overflow</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="responsive-scroll">Copy CSS</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-css" id="responsive-scroll">.stTabs [data-baseweb="tab-list"] {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    white-space: nowrap;
+}
+
+.stTabs [data-baseweb="tab-list"]::-webkit-scrollbar {
+    display: none;
+}
+
+.stTabs [data-baseweb="tab"] {
+    flex-shrink: 0;
+    min-width: 120px;
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alternative Solutions Section -->
+            <section id="alternatives" class="section">
+                <div class="section__header">
+                    <h2>Alternative Solutions</h2>
+                    <p>Third-party components and custom implementations</p>
+                </div>
+
+                <div class="comparison-table">
+                    <h3>Comparison of Approaches</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Pros</th>
+                                <th>Cons</th>
+                                <th>Best For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>st.tabs()</strong></td>
+                                <td>Native, Simple, Fast</td>
+                                <td>Limited styling</td>
+                                <td>Quick prototypes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>streamlit-option-menu</strong></td>
+                                <td>Highly customizable, Icons</td>
+                                <td>External dependency</td>
+                                <td>Navigation menus</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Custom HTML/CSS</strong></td>
+                                <td>Full control, Responsive</td>
+                                <td>More complex</td>
+                                <td>Custom designs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>streamlit-option-menu</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="alt-option-menu">Copy Code</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-python" id="alt-option-menu">from streamlit_option_menu import option_menu
+
+selected = option_menu(
+    menu_title=None,
+    options=['Home', 'Projects', 'Contact'],
+    icons=['house', 'book', 'envelope'],
+    menu_icon="cast",
+    default_index=0,
+    orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "#fafafa"},
+        "icon": {"color": "orange", "font-size": "25px"}, 
+        "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px"},
+        "nav-link-selected": {"background-color": "#02ab21"},
+    }
+)</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Custom Button Navigation</h3>
+                            <button class="btn btn--sm copy-btn" data-copy="alt-custom">Copy Code</button>
+                        </div>
+                        <div class="card__body">
+                            <pre><code class="language-python" id="alt-custom">import streamlit as st
+
+# Custom navigation with session state
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = 'Home'
+
+cols = st.columns(3)
+buttons = ['Home', 'About', 'Contact']
+
+for i, button in enumerate(buttons):
+    with cols[i]:
+        if st.button(button, key=f"nav_{button}"):
+            st.session_state.active_tab = button
+
+# Display content based on active tab
+if st.session_state.active_tab == 'Home':
+    st.write("Home content")
+elif st.session_state.active_tab == 'About':
+    st.write("About content")
+else:
+    st.write("Contact content")</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices Section -->
+            <section id="best-practices" class="section">
+                <div class="section__header">
+                    <h2>Best Practices</h2>
+                    <p>Guidelines and recommendations for tab implementation</p>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>User Experience Guidelines</h3>
+                        </div>
+                        <div class="card__body">
+                            <ul class="tips-list">
+                                <li>Keep tab labels concise and descriptive</li>
+                                <li>Use icons to improve visual hierarchy</li>
+                                <li>Ensure mobile responsiveness</li>
+                                <li>Maintain consistent styling across tabs</li>
+                                <li>Test accessibility with screen readers</li>
+                                <li>Consider loading states for heavy content</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Performance Considerations</h3>
+                        </div>
+                        <div class="card__body">
+                            <ul class="tips-list">
+                                <li>Lazy load content in inactive tabs</li>
+                                <li>Use session state for tab persistence</li>
+                                <li>Minimize CSS injection frequency</li>
+                                <li>Cache heavy computations</li>
+                                <li>Consider component rerun behavior</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Accessibility Best Practices</h3>
+                        </div>
+                        <div class="card__body">
+                            <ul class="tips-list">
+                                <li>Ensure proper ARIA labels</li>
+                                <li>Maintain keyboard navigation</li>
+                                <li>Provide sufficient color contrast</li>
+                                <li>Use semantic HTML structure</li>
+                                <li>Test with screen readers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resources">
+                    <h3>Additional Resources</h3>
+                    <div class="resource-links">
+                        <a href="https://docs.streamlit.io/library/api-reference/layout/st.tabs" target="_blank" class="btn btn--outline">Streamlit Docs</a>
+                        <a href="https://github.com/victoryhb/streamlit-option-menu" target="_blank" class="btn btn--outline">Option Menu GitHub</a>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tab_role" target="_blank" class="btn btn--outline">ARIA Tab Pattern</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Streamlit Tab Styling Guide. Built with modern web technologies.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
